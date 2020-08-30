@@ -1,0 +1,56 @@
+#修改项目端口号114514 1919810
+server:
+  port: 8093
+  name: project
+  env: dev
+#SpringBoot 配置
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/mg_project?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database: mysql
+  redis:
+    database: 0
+    host: localhost
+    password:
+    jedis:
+      pool:
+        max-idle: 30
+        max-active: 50
+    port: 6379
+  mail:
+    host: smtp.qq.com
+    username: liutianjun258@foxmail.com
+    password: chnrfvdwibkliffd
+    protocol: smtp
+    default-encoding: UTF-8
+#  kafka:
+#    #kafka代理地址，可以定义多个
+#    bootstrap-servers:  localhost:9092
+#    producer:
+#      #每次批量发送消息的数量
+#      batch-size: 16384
+#      buffer-memory: 33554432
+#      #指定消息key和消息体的编解码方式
+#      key-serializer:  org.apache.kafka.common.serialization.StringSerializer
+#      value-serializer:  org.apache.kafka.common.serialization.StringSerializer
+#    consumer:
+#      group-id: user-log-group
+#      auto-offset-reset: earliest
+#      enable-auto-commit: true
+#      auto-commit-interval: 100
+#      key-deserializer:  org.apache.kafka.common.serialization.StringDeserializer
+#      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+mybatis:
+  mapper-locations: classpath*:mybatis/mapper/*.xml
+  type-aliases-package: com.sakura.project.entity
+logging:
+  level:
+    com.sakura.project.mapper: debug
+pagehelper:
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql

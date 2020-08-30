@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sakura.project.mapper.generator.MgEnterpriseInfoGeneratorMapper">
+    <resultMap id="BaseResultMap" type="com.sakura.project.entity.MgEnterpriseInfo">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="enterprise_name" jdbcType="VARCHAR" property="enterpriseName"/>
+        <result column="enterprise_legal_person" jdbcType="VARCHAR" property="enterpriseLegalPerson"/>
+        <result column="enterprise_principal" jdbcType="VARCHAR" property="enterprisePrincipal"/>
+        <result column="enterprise_phone" jdbcType="VARCHAR" property="enterprisePhone"/>
+        <result column="enterprise_taxpayer_id" jdbcType="VARCHAR" property="enterpriseTaxpayerId"/>
+        <result column="enterprise_nature" jdbcType="VARCHAR" property="enterpriseNature"/>
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="update_date" jdbcType="TIMESTAMP" property="updateDate"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                            separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, enterprise_name, enterprise_legal_person, enterprise_principal, enterprise_phone, 
+    enterprise_taxpayer_id, enterprise_nature, create_date, update_date
+  </sql>
+    <select id="countByExample" parameterType="com.sakura.project.entity.example.MgEnterpriseInfoExample"
+            resultType="java.lang.Long">
+        select count(*) from mg_enterprise_info
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+
+    <select id="get" resultType="com.sakura.project.common.dto.MgEnterpriseInfoDto">
+        SELECT
+        i.id,
+        i.enterprise_name as `enterpriseName`,
+        i.enterprise_legal_person as `enterpriseLegalPerson`,
+        i.enterprise_principal as `enterprisePrincipal`,
+        i.enterprise_phone as `enterprisePhone`,
+        i.enterprise_taxpayer_id as `enterpriseTaxpayerId`,
+        i.enterprise_nature as `enterprise_nature`,
+        d.enterprise_register_date as `enterpriseRegisterDate`,
+        d.enterprise_ownership_structure as `enterpriseOwnershipStructure`,
+        d.enterprise_business_scope as `enterpriseBusinessScope`,
+        d.enterprise_bank_account as `enterpriseBankAccount`,
+        d.enterprise_account as `enterpriseAccount`,
+        d.enterprise_profile as `enterpriseProfile`,
+        d.enterprise_url as `enterpriseUrl`
+        FROM mg_enterprise_info i
+        LEFT JOIN mg_enterprise_detail_info d
+        on i.id = d.enterprise_id
+        where i.id = #{id}
+        ORDER BY i.id DESC
+    </select>
+
+
+</mapper>

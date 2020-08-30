@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sakura.project.mapper.generator.MgUserInfoGeneratorMapper">
+    <resultMap id="BaseResultMap" type="com.sakura.project.entity.MgUserInfo">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="user_phone" jdbcType="VARCHAR" property="userPhone"/>
+        <result column="user_birthday" jdbcType="TIMESTAMP" property="userBirthday"/>
+        <result column="user_gender" jdbcType="INTEGER" property="userGender"/>
+        <result column="user_email" jdbcType="VARCHAR" property="userEmail"/>
+        <result column="user_id_card" jdbcType="VARCHAR" property="userIdCard"/>
+        <result column="user_password" jdbcType="VARCHAR" property="userPassword"/>
+        <result column="user_password_salt" jdbcType="VARCHAR" property="userPasswordSalt"/>
+        <result column="company_id" jdbcType="INTEGER" property="companyId"/>
+        <result column="role_id" jdbcType="INTEGER" property="roleId"/>
+        <result column="user_state" jdbcType="INTEGER" property="userState"/>
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="update_date" jdbcType="TIMESTAMP" property="updateDate"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                            separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, user_name, user_phone, user_birthday, user_gender, user_email, user_id_card, 
+    user_password, user_password_salt, company_id, role_id, user_state, create_date, 
+    update_date
+  </sql>
+    <select id="countByExample" parameterType="com.sakura.project.entity.example.MgUserInfoExample"
+            resultType="java.lang.Long">
+        select count(*) from mg_user_info
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+
+    <select id="list" resultType="com.sakura.project.common.dto.MgUserInfoDto">
+        SELECT
+        u.id,
+        u.user_name as `userName`,
+        u.user_phone as `userPhone`,
+        u.user_email as `userEmail`,
+        u.user_id_card as `userIdCard`,
+        c.company_name as `companyName`,
+        r.role_name as `roleName`,
+        IF(u.user_state = '1','启用','禁用') as `userState`,
+        u.user_birthday as `userBirthday`
+        FROM mg_user_info u
+        LEFT JOIN mg_company_info c
+        on u.company_id = c.id
+        LEFT JOIN mg_role r
+        on u.role_id = r.id
+        <where>
+            1=1
+            <if test="id != null and id != '' and id != 0 ">
+                and u.id = #{id}
+            </if>
+            <if test="userName != null and userName != ''">
+                and u.user_name like concat('%',#{userName},'%')
+            </if>
+            <if test="companyName != null and companyName != ''">
+                and c.company_name = #{companyName}
+            </if>
+            <if test="roleName != null and roleName != ''">
+                and r.role_name = #{roleName}
+            </if>
+            <if test="userState != null and userState != '' and userState != 0 ">
+                and u.user_state = #{userState}
+            </if>
+        </where>
+        ORDER BY u.id desc
+    </select>
+</mapper>
