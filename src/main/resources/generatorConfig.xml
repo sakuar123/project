@@ -106,7 +106,7 @@
         </javaClientGenerator>
 
         <!-- 数据表进行生成操作 tableName:表名; domainObjectName:对应的DO -->
-        <table tableName="mg_announcement_release"
+        <table tableName="mg_announcement_references"
                 enableSelectByExample="false"
                 enableDeleteByExample="false"
                 enableUpdateByExample="false">

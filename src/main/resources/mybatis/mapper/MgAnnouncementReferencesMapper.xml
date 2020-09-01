@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sakura.project.mapper.generator.MgAnnouncementReferencesGeneratorMapper">
+    <resultMap id="BaseResultMap" type="com.sakura.project.entity.MgAnnouncementReferences">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="references_url" jdbcType="VARCHAR" property="referencesUrl"/>
+        <result column="references_description" jdbcType="VARCHAR" property="referencesDescription"/>
+        <result column="upload_company" jdbcType="INTEGER" property="uploadCompany"/>
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="update_date" jdbcType="TIMESTAMP" property="updateDate"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                            separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, references_url, references_description, upload_company, create_date, update_date
+  </sql>
+    <select id="countByExample" parameterType="com.sakura.project.entity.example.MgAnnouncementReferencesExample"
+            resultType="java.lang.Long">
+        select count(*) from mg_announcement_references
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+
+    <select id="list" parameterType="com.sakura.project.common.dto.MgAnnouncementReferencesDto">
+        SELECT
+        r.id,
+        r.references_url as `referencesUrl`,
+        r.references_description as `referencesDescription`,
+        c.company_name as `uploadCompanyName`,
+        r.create_date as `createDate`
+        FROM mg_announcement_references r
+        LEFT JOIN mg_company_info c
+        ON r.upload_company = c.id
+        <where>
+            1=1
+            <if test="companyName != null and companyName != '' ">
+                and c.company_name like concat('%',#{companyName},'%')
+            </if>
+        </where>
+        ORDER BY r.id DESC
+    </select>
+
+</mapper>
