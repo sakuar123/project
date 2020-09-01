@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sakura.project.mapper.generator.MgAnnouncementReleaseGeneratorMapper">
+    <resultMap id="BaseResultMap" type="com.sakura.project.entity.MgAnnouncementRelease">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="announcement_title" jdbcType="VARCHAR" property="announcementTitle"/>
+        <result column="announcement_type" jdbcType="INTEGER" property="announcementType"/>
+        <result column="announcement_time" jdbcType="TIMESTAMP" property="announcementTime"/>
+        <result column="announcemen_annex_url" jdbcType="VARCHAR" property="announcemenAnnexUrl"/>
+        <result column="create_user_id" jdbcType="INTEGER" property="createUserId"/>
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="update_date" jdbcType="TIMESTAMP" property="updateDate"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.sakura.project.entity.MgAnnouncementRelease">
+        <result column="announcemen_description" jdbcType="LONGVARCHAR" property="announcemenDescription"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                            separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, announcement_title, announcement_type, announcement_time, announcemen_annex_url, 
+    create_user_id, create_date, update_date
+  </sql>
+    <sql id="Blob_Column_List">
+    announcemen_description
+  </sql>
+    <select id="countByExample" parameterType="com.sakura.project.entity.example.MgAnnouncementReleaseExample"
+            resultType="java.lang.Long">
+        select count(*) from mg_announcement_release
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <select id="list" resultType="com.sakura.project.common.dto.MgAnnouncementReleaseDto">
+        SELECT
+        p.id,
+        p.announcement_title as `announcementTitle`,
+        p.announcement_type as `announcementType`,
+        p.announcement_time as `announcementTime`,
+        p.announcemen_description as `announcemenDescription`,
+        p.announcemen_annex_url as `announcemenAnnexUrl`,
+        u.user_name as `createUser`,
+        p.create_date as `createDate`
+        FROM
+        mg_announcement_release p
+        LEFT JOIN mg_user_info u ON p.create_user_id = u.id
+        <where>
+            1 = 1
+            <if test="id != null and id != '' and id != 0">
+                and p.id = #{id}
+            </if>
+            <if test="announcement_title != null and announcement_title!= '' ">
+                and p.announcement_title like concat('%',#{announcement_title},'%')
+            </if>
+            <if test="announcementType != null and announcementType != '' and announcementType != 0">
+                and p.announcement_type = #{announcementType}
+            </if>
+        </where>
+        ORDER BY p.id DESC
+    </select>
+
+</mapper>
