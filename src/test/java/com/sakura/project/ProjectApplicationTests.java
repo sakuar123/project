@@ -1,9 +1,13 @@
 package com.sakura.project;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.alibaba.fastjson.JSON;
 import com.sakura.project.common.util.Assert;
 import com.sakura.project.common.util.CommonsUtil;
 import com.sakura.project.common.util.DateUtils;
@@ -18,6 +22,8 @@ class ProjectApplicationTests {
 
     @Autowired
     private MgUserInfoGeneratorMapper mgUserInfoGeneratorMapper;
+    @Autowired
+    private SqlSessionTemplate sqlSessionTemplate;
 
     @Test
     void t1() {
@@ -40,6 +46,12 @@ class ProjectApplicationTests {
         mgUserInfo.setUserBirthday(DateUtils.parseDate(pageData.getStringVal("birthday")));
         mgUserInfo.setUserGender("M".equals(pageData.getString("sex")) ? 1 : 2);
         mgUserInfoGeneratorMapper.insertSelective(mgUserInfo);
+    }
+
+    @Test
+    void t2() {
+        List<PageData> list = sqlSessionTemplate.<PageData>selectList("TestMapper.list", null);
+        System.out.println(JSON.toJSON(list));
     }
 
 }

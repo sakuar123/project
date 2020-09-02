@@ -2,6 +2,7 @@ package com.sakura.project.service.impl;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -19,8 +20,10 @@ import com.sakura.project.common.util.MD5Util;
 import com.sakura.project.common.util.ObjectTools;
 import com.sakura.project.common.util.PageData;
 import com.sakura.project.common.util.PageResult;
+import com.sakura.project.entity.MgRole;
 import com.sakura.project.entity.MgUserInfo;
 import com.sakura.project.entity.example.MgUserInfoExample;
+import com.sakura.project.mapper.generator.MgRoleGeneratorMapper;
 import com.sakura.project.mapper.generator.MgUserInfoGeneratorMapper;
 import com.sakura.project.service.MgUserService;
 
@@ -37,6 +40,8 @@ public class MgUserServiceImpl implements MgUserService {
 
     @Autowired
     private MgUserInfoGeneratorMapper mgUserInfoGeneratorMapper;
+    @Autowired
+    private MgRoleGeneratorMapper mgRoleGeneratorMapper;
 
     @Override
     public JsonResult<MgUserInfoDto> get(Integer userId) {
@@ -79,10 +84,10 @@ public class MgUserServiceImpl implements MgUserService {
             return JsonResult.<Boolean>success();
         } catch (ErrorException e) {
             e.printStackTrace();
-            return JsonResult.fail(e.getMessage());
+            return JsonResult.error(e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
-            return JsonResult.fail("添加用户失败");
+            return JsonResult.error("添加用户失败");
         }
     }
 
@@ -128,10 +133,10 @@ public class MgUserServiceImpl implements MgUserService {
             return JsonResult.<Boolean>success(true);
         } catch (ErrorException e) {
             log.error("修改用户密码时异常:{}", e.getMessage());
-            return JsonResult.fail(e.getMessage());
+            return JsonResult.error(e.getMessage());
         } catch (Exception e) {
             log.error("修改用户密码时异常:{}", e.getMessage());
-            return JsonResult.fail("修改密码失败");
+            return JsonResult.error("修改密码失败");
         }
     }
 
@@ -145,4 +150,12 @@ public class MgUserServiceImpl implements MgUserService {
         );
         return JsonResult.<Boolean>success(true);
     }
+
+    @Override
+    public JsonResult<List<String>> role() {
+        List<String> result = mgRoleGeneratorMapper.selectAll().stream().map(MgRole::getRoleName)
+                .collect(Collectors.toList());
+        return JsonResult.success(result);
+    }
+
 }

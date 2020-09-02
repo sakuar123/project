@@ -55,7 +55,7 @@ public class MgSustainInfoServiceImpl implements MgSustainInfoService {
             return JsonResult.success();
         } catch (Exception e) {
             log.error("添加方式时异常:{}", e.getMessage());
-            return JsonResult.fail("添加方式失败!");
+            return JsonResult.error("添加方式失败!");
         }
     }
 
@@ -66,7 +66,7 @@ public class MgSustainInfoServiceImpl implements MgSustainInfoService {
             return JsonResult.success();
         } catch (Exception e) {
             log.error("修改方式时异常:{}", e.getMessage());
-            return JsonResult.fail("修改方式失败!");
+            return JsonResult.error("修改方式失败!");
         }
     }
 

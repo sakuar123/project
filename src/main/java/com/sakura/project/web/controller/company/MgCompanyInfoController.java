@@ -1,5 +1,7 @@
 package com.sakura.project.web.controller.company;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,4 +61,9 @@ public class MgCompanyInfoController {
         return mgCompanyInfoService.del(id);
     }
 
+    @GetMapping("/option")
+    @ApiOperation("公司下拉列表框")
+    public JsonResult<List<String>> option() {
+        return mgCompanyInfoService.company();
+    }
 }

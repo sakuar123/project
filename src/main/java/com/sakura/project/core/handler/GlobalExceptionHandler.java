@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * 处理全局的异常,
- *
  * @author 李七夜
  * @version 1.0
  */
@@ -25,9 +24,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public JsonResult<Object> handleException(Exception e) {
-        log.error(e.getMessage());
+        log.error("Exception:{}", e.getMessage());
         e.printStackTrace();
-        return JsonResult.fail("系统异常");
+        return JsonResult.error("系统异常");
     }
 
     /**
@@ -36,16 +35,16 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Throwable.class)
     @ResponseBody
     public JsonResult<Object> handleException(Throwable e) {
-        log.error(e.getMessage());
+        log.error("Throwable:{}", e.getMessage());
         e.printStackTrace();
-        return JsonResult.fail("系统异常");
+        return JsonResult.error("系统异常");
     }
 
     @ExceptionHandler(ErrorException.class)
     @ResponseBody
     public JsonResult<Object> errorException(ErrorException e) {
-        log.error(e.getMessage());
-        return JsonResult.of(e.getCode(), e.getMsg());
+        log.error("ErrorException:{}", e.getMsg());
+        return JsonResult.<Object>of(e);
     }
 
 }

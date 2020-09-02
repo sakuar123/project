@@ -100,7 +100,7 @@ public class MgEnterpriseInfoServiceImpl implements MgEnterpriseInfoService {
             return JsonResult.<Boolean>success(true);
         } catch (Exception e) {
             log.error("新增项目时异常:{}", e.getMessage());
-            return JsonResult.<Boolean>fail("新增项目失败!");
+            return JsonResult.<Boolean>error("新增项目失败!");
         }
     }
 
@@ -112,7 +112,7 @@ public class MgEnterpriseInfoServiceImpl implements MgEnterpriseInfoService {
             return JsonResult.<Boolean>success();
         } catch (Exception e) {
             log.error("修改企业信息异常:{}", e.getMessage());
-            return JsonResult.fail("修改企业信息失败!");
+            return JsonResult.error("修改企业信息失败!");
         }
     }
 
@@ -124,7 +124,7 @@ public class MgEnterpriseInfoServiceImpl implements MgEnterpriseInfoService {
             return JsonResult.<Boolean>success();
         } catch (Exception e) {
             log.error("删除企业信息时异常:{}", e.getMessage());
-            return JsonResult.fail("删除企业失败!");
+            return JsonResult.error("删除企业失败!");
         }
     }
 

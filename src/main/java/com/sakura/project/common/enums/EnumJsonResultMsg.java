@@ -36,4 +36,14 @@ public enum EnumJsonResultMsg implements IMessageConstant {
     ;
     private int code;
     private String message;
+
+    public static EnumJsonResultMsg build(String message) {
+        EnumJsonResultMsg.ERROR.message = message;
+        return EnumJsonResultMsg.ERROR;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(build("123123").getMessage());
+    }
+
 }

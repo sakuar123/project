@@ -106,7 +106,7 @@
         </javaClientGenerator>
 
         <!-- 数据表进行生成操作 tableName:表名; domainObjectName:对应的DO -->
-        <table tableName="mg_announcement_references"
+        <table tableName="mg_permission"
                 enableSelectByExample="false"
                 enableDeleteByExample="false"
                 enableUpdateByExample="false">
@@ -114,7 +114,6 @@
             <!--            <columnOverride column="update_time" javaType="java.util.Date"/>-->
             <!--            <columnOverride column="create_time" javaType="java.util.Date"/>-->
         </table>
-
     </context>
 
 </generatorConfiguration>

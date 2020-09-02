@@ -1,5 +1,7 @@
 package com.sakura.project.service;
 
+import java.util.List;
+
 import org.springframework.data.domain.Pageable;
 
 import com.sakura.project.common.dto.MgUserInfoDto;
@@ -56,5 +58,12 @@ public interface MgUserService {
      * @return
      */
     JsonResult<Boolean> del(Integer... userId);
+
+
+    /**
+     * 获取角色的下拉列表框
+     * @return
+     */
+    JsonResult<List<String>> role();
 
 }

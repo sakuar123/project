@@ -10,6 +10,9 @@ import com.sakura.project.mapper.BaseGeneratorMapper;
 
 import org.apache.ibatis.annotations.Mapper;
 
+/**
+ * @author 李七夜
+ */
 @Mapper
 public interface MgUserInfoGeneratorMapper extends BaseGeneratorMapper<MgUserInfo> {
 

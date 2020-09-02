@@ -45,4 +45,10 @@ public interface MgCompanyInfoService {
      */
     JsonResult<Boolean> del(Integer id);
 
+    /**
+     * 获取公司的下拉列表框
+     * @return
+     */
+    JsonResult<List<String>> company();
+
 }

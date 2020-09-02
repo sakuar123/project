@@ -51,7 +51,7 @@ public class MgAnnouncementReferencesServiceImpl implements MgAnnouncementRefere
             return JsonResult.success();
         } catch (Exception e) {
             log.error("上传资料时异常:{}", e.getMessage());
-            return JsonResult.fail("上传资料失败!");
+            return JsonResult.error("上传资料失败!");
         }
     }
 

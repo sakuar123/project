@@ -47,6 +47,7 @@ spring:
 mybatis:
   mapper-locations: classpath*:mybatis/mapper/*.xml
   type-aliases-package: com.sakura.project.entity
+  configLocation: classpath:/mybatis-config.xml
 logging:
   level:
     com.sakura.project.mapper: debug

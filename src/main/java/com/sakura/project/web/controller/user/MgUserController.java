@@ -1,9 +1,12 @@
 package com.sakura.project.web.controller.user;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sakura.project.common.dto.MgUserInfoDto;
@@ -29,6 +31,7 @@ import io.swagger.annotations.ApiOperation;
  * Created by 李七夜 on 2020/8/28 16:54
  */
 @RestController
+@CrossOrigin
 @RequestMapping("/mg/user")
 @Api(tags = "用户管理控制器")
 public class MgUserController {
@@ -71,6 +74,12 @@ public class MgUserController {
     @ApiOperation("修改密码")
     public JsonResult<Boolean> updatePwd(@RequestBody PageData pageData) {
         return mgUserService.updatePwd(pageData);
+    }
+
+    @GetMapping("/role")
+    @ApiOperation("角色列表下拉框")
+    public JsonResult<List<String>> role() {
+        return mgUserService.role();
     }
 
 }

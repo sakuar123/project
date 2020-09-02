@@ -1,6 +1,7 @@
 package com.sakura.project.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +59,7 @@ public class MgCompanyInfoServiceImpl implements MgCompanyInfoService {
             return JsonResult.<Boolean>success();
         } catch (Exception e) {
             log.error("新增公司时异常:{}", e.getMessage());
-            return JsonResult.<Boolean>fail("添加公司失败!");
+            return JsonResult.<Boolean>error("添加公司失败!");
         }
     }
 
@@ -69,7 +70,7 @@ public class MgCompanyInfoServiceImpl implements MgCompanyInfoService {
             return JsonResult.success();
         } catch (Exception e) {
             log.error("修改公司信息时异常:{}", e.getMessage());
-            return JsonResult.fail("修改公司信息失败");
+            return JsonResult.error("修改公司信息失败");
         }
     }
 
@@ -77,5 +78,12 @@ public class MgCompanyInfoServiceImpl implements MgCompanyInfoService {
     public JsonResult<Boolean> del(Integer id) {
         mgCompanyInfoGeneratorMapper.deleteByPrimaryKey(id);
         return JsonResult.success();
+    }
+
+    @Override
+    public JsonResult<List<String>> company() {
+        List<String> result = mgCompanyInfoGeneratorMapper.selectAll().stream().map(MgCompanyInfo::getCompanyName)
+                .collect(Collectors.toList());
+        return JsonResult.success(result);
     }
 }

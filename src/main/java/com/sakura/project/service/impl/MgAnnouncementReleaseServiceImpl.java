@@ -63,7 +63,7 @@ public class MgAnnouncementReleaseServiceImpl implements MgAnnouncementReleaseSe
             return JsonResult.success();
         } catch (Exception e) {
             log.error("添加通知公告时异常:{}", e.getMessage());
-            return JsonResult.fail("添加通知公告失败!");
+            return JsonResult.error("添加通知公告失败!");
         }
     }
 
@@ -74,7 +74,7 @@ public class MgAnnouncementReleaseServiceImpl implements MgAnnouncementReleaseSe
             return JsonResult.success();
         } catch (Exception e) {
             log.error("修改通知公告时异常:{}", e.getMessage());
-            return JsonResult.fail("修改通知公告失败!");
+            return JsonResult.error("修改通知公告失败!");
         }
     }
 

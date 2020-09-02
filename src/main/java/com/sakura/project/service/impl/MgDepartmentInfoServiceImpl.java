@@ -57,7 +57,7 @@ public class MgDepartmentInfoServiceImpl implements MgDepartmentInfoService {
             return JsonResult.success();
         } catch (Exception e) {
             log.error("添加科室时异常:{}", e.getMessage());
-            return JsonResult.fail("添加科室失败!");
+            return JsonResult.error("添加科室失败!");
         }
     }
 
@@ -68,7 +68,7 @@ public class MgDepartmentInfoServiceImpl implements MgDepartmentInfoService {
             return JsonResult.success();
         } catch (Exception e) {
             log.error("修改科室时异常:{}", e.getMessage());
-            return JsonResult.fail("修改科室失败!");
+            return JsonResult.error("修改科室失败!");
         }
     }
 
