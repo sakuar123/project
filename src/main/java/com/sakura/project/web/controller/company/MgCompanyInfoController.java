@@ -63,7 +63,7 @@ public class MgCompanyInfoController {
 
     @GetMapping("/option")
     @ApiOperation("公司下拉列表框")
-    public JsonResult<List<String>> option() {
+    public JsonResult<List<PageData>> option() {
         return mgCompanyInfoService.company();
     }
 }

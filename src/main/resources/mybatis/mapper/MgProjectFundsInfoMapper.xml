@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sakura.project.mapper.generator.MgProjectFundsInfoGeneratorMapper">
+    <resultMap id="BaseResultMap" type="com.sakura.project.entity.MgProjectFundsInfo">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="project_announcement_id" jdbcType="INTEGER" property="projectAnnouncementId"/>
+        <result column="project_name" jdbcType="VARCHAR" property="projectName"/>
+        <result column="project_declare_time" jdbcType="TIMESTAMP" property="projectDeclareTime"/>
+        <result column="project_body" jdbcType="VARCHAR" property="projectBody"/>
+        <result column="project_status" jdbcType="INTEGER" property="projectStatus"/>
+        <result column="project_construction_nature" jdbcType="VARCHAR" property="projectConstructionNature"/>
+        <result column="project_content" jdbcType="VARCHAR" property="projectContent"/>
+        <result column="project_start_time" jdbcType="TIMESTAMP" property="projectStartTime"/>
+        <result column="project_end_time" jdbcType="TIMESTAMP" property="projectEndTime"/>
+        <result column="project_address" jdbcType="VARCHAR" property="projectAddress"/>
+        <result column="project_funds_quota" jdbcType="DECIMAL" property="projectFundsQuota"/>
+        <result column="project_center_investment" jdbcType="DECIMAL" property="projectCenterInvestment"/>
+        <result column="project_province_investment" jdbcType="DECIMAL" property="projectProvinceInvestment"/>
+        <result column="project_bank_investment" jdbcType="DECIMAL" property="projectBankInvestment"/>
+        <result column="project_enterprise_investment" jdbcType="DECIMAL" property="projectEnterpriseInvestment"/>
+        <result column="project_branch" jdbcType="INTEGER" property="projectBranch"/>
+        <result column="project_leave" jdbcType="INTEGER" property="projectLeave"/>
+        <result column="project_department" jdbcType="INTEGER" property="projectDepartment"/>
+        <result column="project_is_topic" jdbcType="INTEGER" property="projectIsTopic"/>
+        <result column="project_sustain" jdbcType="INTEGER" property="projectSustain"/>
+        <result column="project_create_user" jdbcType="INTEGER" property="projectCreateUser"/>
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="update_date" jdbcType="TIMESTAMP" property="updateDate"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                            separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, project_announcement_id, project_name, project_declare_time, project_body, project_status, 
+    project_construction_nature, project_content, project_start_time, project_end_time, 
+    project_address, project_funds_quota, project_center_investment, project_province_investment, 
+    project_bank_investment, project_enterprise_investment, project_branch, project_leave, 
+    project_department, project_is_topic, project_sustain, project_create_user, create_date, 
+    update_date
+  </sql>
+    <select id="countByExample" parameterType="com.sakura.project.entity.example.MgProjectFundsInfoExample"
+            resultType="java.lang.Long">
+        select count(*) from mg_project_funds_info
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+
+    <select id="get" resultType="pd">
+        SELECT
+        p.project_name AS `projectName`,
+        DATE_FORMAT( p.project_declare_time, '%Y-%m-%d' ) AS `projectDeclareTime`,
+        p.project_body AS `projectBody`,
+        p.project_status AS `projectStatus`,
+        p.project_construction_nature AS `projectConstructionNature`,
+        p.project_content AS `projectContent`,
+        DATE_FORMAT( p.project_start_time, '%Y-%m-%d' ) AS `projectStartTime`,
+        DATE_FORMAT( p.project_end_time, '%Y-%m-%d' ) AS `projectEndTime`,
+        ( SELECT branch_name FROM mg_branch_info WHERE id = p.project_branch ) AS `projectBranch`,
+        p.project_leave AS `projectLeave`,
+        ( SELECT department_name FROM mg_department_info WHERE id = p.project_department ) AS `projectDepartment`,
+        IF
+        ( p.project_is_topic = 1, '是', '否' ) AS `projectIsTopic`,
+        ( SELECT sustain_name FROM mg_sustain_info WHERE id = p.project_sustain ) AS `projectSustain`,
+        IFNULL( p.project_funds_quota, '0.0' ) AS `projectFundsQuota`,
+        IFNULL( p.project_center_investment, '0.0' ) AS `projectCenterInvestment`,
+        IFNULL( p.project_province_investment, '0.0' ) AS `projectProvinceInvestment`,
+        IFNULL( p.project_bank_investment, '0.0' ) AS `projectBankInvestment`,
+        IFNULL( p.project_enterprise_investment, '0.0' ) AS `projectEnterpriseInvestment`,
+        u.user_name AS `userName`,
+        u.user_phone AS `phone`,
+        ( SELECT company_name FROM mg_company_info WHERE id = u.company_id ) AS `companyName`
+        FROM
+        mg_project_funds_info p
+        LEFT JOIN mg_user_info u ON p.project_create_user = u.id
+        WHERE
+        p.id = #{projectId}
+    </select>
+
+    <select id="list" resultType="pd">
+        SELECT
+        p.id,
+        DATE_FORMAT(p.project_declare_time, '%Y-%m-%d' ) AS `projectDeclareTime`,
+        p.project_status AS `projectStatus`,
+        p.project_name AS `projectName`,
+        p.project_body AS `projectBody`,
+        DATE_FORMAT(p.project_start_time, '%Y-%m-%d' ) AS `projectStartTime`,
+        DATE_FORMAT(p.project_end_time, '%Y-%m-%d' ) AS `projectEndTime`,
+        IFNULL( p.project_funds_quota, '0.0' ) AS `projectFundsQuota`,
+        ( SELECT branch_name FROM mg_branch_info WHERE id = project_branch ) AS `projectBranch`,
+        project_leave AS `projectLeave`,
+        ( SELECT department_name FROM mg_department_info WHERE id = project_department ) AS `projectDepartment`,
+        m.user_name AS `projectCreateUser`,
+        ( SELECT company_name FROM mg_company_info WHERE id = m.company_id ) AS `projectCompany`
+        FROM
+        mg_project_funds_info p
+        LEFT JOIN mg_user_info m
+        on p.project_create_user = m.id
+        <where>
+            1 = 1
+
+            <!--项目主管部门-->
+            <if test="projectBranch != null and projectBranch != '' and projectBranch != 0">
+                and p.project_branch = #{projectBranch}
+            </if>
+
+            <!--项目级别-->
+            <if test="projectLeave != null and projectLeave != '' and projectLeave != 0">
+                and p.project_leave = #{projectLeave}
+            </if>
+
+            <!--主管科室-->
+            <if test="projectDepartment != null and projectDepartment != '' and projectDepartment != 0">
+                and p.project_department = #{projectDepartment}
+            </if>
+
+            <!--项目下沉公司-->
+            <if test="companyId != null and companyId != '' and companyId != 0">
+                and m.company_id = #{companyId}
+            </if>
+
+            <!--项目状态-->
+            <if test="projectStatus != null and projectStatus != '' and projectStatus != 0">
+                and p.project_status = #{projectStatus}
+            </if>
+
+            <!--项目名称-->
+            <if test="projectName != null and projectName != ''">
+                and p.project_name like concat('%',#{projectName},'%')
+            </if>
+        </where>
+        ORDER BY
+        id DESC
+    </select>
+
+</mapper>

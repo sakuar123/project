@@ -49,6 +49,6 @@ public interface MgCompanyInfoService {
      * 获取公司的下拉列表框
      * @return
      */
-    JsonResult<List<String>> company();
+    JsonResult<List<PageData>> company();
 
 }

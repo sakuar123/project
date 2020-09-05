@@ -81,9 +81,14 @@ public class MgCompanyInfoServiceImpl implements MgCompanyInfoService {
     }
 
     @Override
-    public JsonResult<List<String>> company() {
-        List<String> result = mgCompanyInfoGeneratorMapper.selectAll().stream().map(MgCompanyInfo::getCompanyName)
-                .collect(Collectors.toList());
+    public JsonResult<List<PageData>> company() {
+        List<MgCompanyInfo> list = mgCompanyInfoGeneratorMapper.selectAll();
+        List<PageData> result = list.stream().map(item -> {
+            PageData pageData = new PageData();
+            pageData.put("lable", item.getCompanyName());
+            pageData.put("value", item.getId());
+            return pageData;
+        }).collect(Collectors.toList());
         return JsonResult.success(result);
     }
 }
