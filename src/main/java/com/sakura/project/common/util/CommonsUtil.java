@@ -201,14 +201,12 @@ public class CommonsUtil {
      * 返回一段json信息输出打印到控制台上
      */
     public static void returnResult(JsonResult<Object> jsonResult, HttpServletResponse response) {
-
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json; charset=utf-8");
-
         try (PrintWriter writer = response.getWriter()) {
             writer.print(jsonResult.toJsonString());
         } catch (IOException e) {
-            log.error(e.getMessage(), e);
+            log.error(e.getMessage());
         }
     }
 

@@ -74,6 +74,7 @@ public class MgUserLoginServiceImpl implements MgUserLoginService {
         PageData result = new PageData();
         //根据手机号查询到的用户信息
         MgUserInfo mgUserInfo = getUserByPhone(loginName);
+        Assert.isTrue(ObjectTools.isNotBlank(mgUserInfo), EnumJsonResultMsg.USER_PHONE_BAD);
         //验证码登录
         if (EnumLoginType.CAPTCHA.getLoginType().equals(loginType)) {
             //将缓存中的验证码取出,在与用户输入的验证码做比较,如果为空或者不一致,直接返回提示用户
@@ -84,7 +85,6 @@ public class MgUserLoginServiceImpl implements MgUserLoginService {
             redisTemplate.delete(StringUtils.join(CommonConstant.REDIS_LOGIN_PHONE, loginName));
         } else {
             //密码登录
-            Assert.isTrue(ObjectTools.isNotBlank(mgUserInfo), EnumJsonResultMsg.USER_PHONE_BAD);
             //将用户输入的密码加密后再与数据库中的密码做比较,
             String userPassword = MD5Util.getMd5(loginPwd, mgUserInfo.getUserPasswordSalt());
             Assert.isTrue(userPassword.equals(mgUserInfo.getUserPassword()), "密码错误!");

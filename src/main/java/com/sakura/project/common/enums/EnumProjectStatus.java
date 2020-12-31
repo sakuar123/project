@@ -22,6 +22,8 @@ public enum EnumProjectStatus {
     private String val;
 
     public static Map<Integer, String> getMap() {
+//        DateUtils.toLocalDateTime(new Date()).getYear();
+//        Set<Integer> set = Arrays.stream(values()).map(EnumProjectStatus::getCode).collect(Collectors.toSet());
         return Arrays.stream(values())
                 .collect(Collectors.toMap(EnumProjectStatus::getCode, EnumProjectStatus::getVal, (s1, s2) -> s1));
     }

@@ -18,54 +18,51 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Created by Mybatis Generator on 2020/08/28
+ * Created by Mybatis Generator on 2020/09/05
  * @author 李七夜
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(value = "用户表")
-@Table(name = "mg_user_info")
-public class MgUserInfo implements Serializable {
+@ApiModel(value = "荣誉类项目填报表")
+@Table(name = "mg_project_honor_info")
+public class MgProjectHonorInfo implements Serializable {
 
     @Id
     @ApiModelProperty(value = "主键id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ApiModelProperty(value = "用户名")
-    private String userName;
+    @ApiModelProperty(value = "项目名称")
+    private String projectName;
 
-    @ApiModelProperty(value = "手机号")
-    private String userPhone;
+    @ApiModelProperty(value = "项目公告")
+    private Integer projectAnnouncementId;
 
-    @ApiModelProperty(value = "出生日期")
-    private Date userBirthday;
+    @ApiModelProperty(value = "荣誉名称")
+    private String projectHonorName;
 
-    @ApiModelProperty(value = "性别")
-    private Integer userGender;
+    @ApiModelProperty(value = "项目主体")
+    private String projectBody;
 
-    @ApiModelProperty(value = "用户邮箱")
-    private String userEmail;
+    @ApiModelProperty(value = "项目申报时间")
+    private Date projectDeclareTime;
 
-    @ApiModelProperty(value = "用户身份证号")
-    private String userIdCard;
+    @ApiModelProperty(value = "项目等级")
+    private Integer projectLeave;
 
-    @ApiModelProperty(value = "密码")
-    private String userPassword;
+    @ApiModelProperty(value = "项目主管部门")
+    private Integer projectBranch;
 
-    @ApiModelProperty(value = "密码盐")
-    private String userPasswordSalt;
+    @ApiModelProperty(value = "主管科室")
+    private Integer projectDepartment;
 
-    @ApiModelProperty(value = "所属公司")
-    private Integer companyId;
+    @ApiModelProperty(value = "备注")
+    private String projectDescription;
 
-    @ApiModelProperty(value = "角色")
-    private Integer roleId;
-
-    @ApiModelProperty(value = "是否启用,-1为禁用,1:为启用")
-    private Integer userState;
+    @ApiModelProperty(value = "项目创建者")
+    private Integer projectCreateUser;
 
     @ApiModelProperty(value = "创建时间")
     private Date createDate;
@@ -73,23 +70,26 @@ public class MgUserInfo implements Serializable {
     @ApiModelProperty(value = "更新时间")
     private Date updateDate;
 
+    @ApiModelProperty(value = "项目申报条件")
+    private String projectDeclareCondition;
+
     private static final long serialVersionUID = 1L;
 
     public enum Column {
         id("id", "id", "INTEGER", false),
-        userName("user_name", "userName", "VARCHAR", false),
-        userPhone("user_phone", "userPhone", "VARCHAR", false),
-        userBirthday("user_birthday", "userBirthday", "TIMESTAMP", false),
-        userGender("user_gender", "userGender", "INTEGER", false),
-        userEmail("user_email", "userEmail", "VARCHAR", false),
-        userIdCard("user_id_card", "userIdCard", "VARCHAR", false),
-        userPassword("user_password", "userPassword", "VARCHAR", false),
-        userPasswordSalt("user_password_salt", "userPasswordSalt", "VARCHAR", false),
-        companyId("company_id", "companyId", "INTEGER", false),
-        roleId("role_id", "roleId", "INTEGER", false),
-        userState("user_state", "userState", "INTEGER", false),
+        projectName("project_name", "projectName", "VARCHAR", false),
+        projectAnnouncementId("project_announcement_id", "projectAnnouncementId", "INTEGER", false),
+        projectHonorName("project_honor_name", "projectHonorName", "VARCHAR", false),
+        projectBody("project_body", "projectBody", "VARCHAR", false),
+        projectDeclareTime("project_declare_time", "projectDeclareTime", "TIMESTAMP", false),
+        projectLeave("project_leave", "projectLeave", "INTEGER", false),
+        projectBranch("project_branch", "projectBranch", "INTEGER", false),
+        projectDepartment("project_department", "projectDepartment", "INTEGER", false),
+        projectDescription("project_description", "projectDescription", "VARCHAR", false),
+        projectCreateUser("project_create_user", "projectCreateUser", "INTEGER", false),
         createDate("create_date", "createDate", "TIMESTAMP", false),
-        updateDate("update_date", "updateDate", "TIMESTAMP", false);
+        updateDate("update_date", "updateDate", "TIMESTAMP", false),
+        projectDeclareCondition("project_declare_condition", "projectDeclareCondition", "LONGVARCHAR", false);
 
         private static final String BEGINNING_DELIMITER = "\"";
 

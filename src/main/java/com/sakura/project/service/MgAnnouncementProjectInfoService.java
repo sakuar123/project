@@ -1,5 +1,7 @@
 package com.sakura.project.service;
 
+import java.util.List;
+
 import org.springframework.data.domain.Pageable;
 
 import com.sakura.project.common.dto.MgAnnouncementProjectInfoDto;
@@ -49,5 +51,11 @@ public interface MgAnnouncementProjectInfoService {
      * @return
      */
     JsonResult<Boolean> del(Integer id);
+
+    /**
+     * 公告下拉列表框
+     * @return
+     */
+    JsonResult<List<PageData>> option();
 
 }

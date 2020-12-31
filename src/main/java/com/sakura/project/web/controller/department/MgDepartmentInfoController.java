@@ -1,5 +1,7 @@
 package com.sakura.project.web.controller.department;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +60,12 @@ public class MgDepartmentInfoController {
     @ApiOperation("删除科室")
     public JsonResult<Boolean> del(@PathVariable Integer id) {
         return mgDepartmentInfoService.del(id);
+    }
+
+    @GetMapping("/option")
+    @ApiOperation("科室下拉列表")
+    public JsonResult<List<PageData>> option() {
+        return mgDepartmentInfoService.option();
     }
 
 }

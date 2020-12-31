@@ -1,5 +1,7 @@
 package com.sakura.project.core.listen;
 
+import javax.servlet.ServletContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
@@ -17,7 +19,6 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * SpringBoot全局监听器:监听到SpringBoot启动完成的时候
- *
  * @author 李七夜
  */
 @Slf4j
@@ -26,10 +27,13 @@ public class SpringBootStartListener implements ApplicationListener<ApplicationR
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
+    @Autowired
+    private ServletContext servletContext;
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
         checkRedisConnection();
+        servletContext.setAttribute("session", 1);
         ConfigurableApplicationContext applicationContext = applicationReadyEvent.getApplicationContext();
         ConfigurableEnvironment environment = applicationContext.getEnvironment();
         String serverPort = environment.getProperty("server.port");
@@ -44,13 +48,13 @@ public class SpringBootStartListener implements ApplicationListener<ApplicationR
                         "Application '" + projectName + "' is running! Access URLs:\n\t" +
                         "Local: \t\thttp://localhost:{}{}\n\t" +
                         "{}\n\t" +
-						"Environment: \t\t{}" +
+                        "Environment: \t\t{}" +
                         "\n----------------------------------------------------------",
                 serverPort,
                 contextPath,
                 "Swagger: \t\thttp://localhost:" + serverPort + contextPath
                         + ("/".equals(contextPath) ? "" : "/")
-                        + "swagger-ui.html",env);
+                        + "swagger-ui.html", env);
     }
 
     private void checkRedisConnection() {

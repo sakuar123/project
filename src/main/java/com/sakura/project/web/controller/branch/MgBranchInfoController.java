@@ -1,5 +1,7 @@
 package com.sakura.project.web.controller.branch;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +60,12 @@ public class MgBranchInfoController {
     @ApiOperation("删除部门")
     public JsonResult<Boolean> del(@PathVariable Integer id) {
         return mgBranchInfoService.del(id);
+    }
+
+    @GetMapping("/option")
+    @ApiOperation("主管部门下拉列表")
+    public JsonResult<List<PageData>> option() {
+        return mgBranchInfoService.option();
     }
 
 }

@@ -3,14 +3,15 @@ package com.sakura.project;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.StringUtils;
-import org.assertj.core.util.Lists;
+import javax.servlet.http.HttpServletRequest;
+
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.alibaba.fastjson.JSON;
 import com.sakura.project.common.util.Assert;
@@ -22,6 +23,7 @@ import com.sakura.project.common.util.ObjectTools;
 import com.sakura.project.common.util.PageData;
 import com.sakura.project.entity.MgProjectFundsInfo;
 import com.sakura.project.entity.MgUserInfo;
+import com.sakura.project.mapper.generator.MgProjectHonorInfoGeneratorMapper;
 import com.sakura.project.mapper.generator.MgUserInfoGeneratorMapper;
 import com.sakura.project.service.MgProjectFundsInfoService;
 
@@ -34,16 +36,11 @@ class ProjectApplicationTests {
     private SqlSessionTemplate sqlSessionTemplate;
     @Autowired
     private MgProjectFundsInfoService mgProjectFundsInfoService;
+    @Autowired
+    private MgProjectHonorInfoGeneratorMapper mgProjectHonorInfoGeneratorMapper;
 
     public static void main(String[] args) {
-//        List<String> ids = Lists.newArrayList();
-//        ids.add("1");
-//        ids.add("2");
-//        ids.add("3");
-//        List<String> newList = ids.stream().filter(s -> !s.equals("1")).collect(Collectors.toList());
-//        System.out.println(JSON.toJSON(newList));
-        String text = "12312";
-        System.out.println(StringUtils.isNotBlank(text));
+        System.out.println(CommonsUtil.getUUID());
     }
 
     @Test
@@ -103,4 +100,18 @@ class ProjectApplicationTests {
         JsonResult<Boolean> jsonResult = mgProjectFundsInfoService.add(mgProjectFundsInfo);
         System.out.println(jsonResult.getData());
     }
+
+    @Test
+    void t4() {
+        mgProjectHonorInfoGeneratorMapper.selectAll();
+    }
+
+    @Test
+    void t5() {
+        ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder
+                .getRequestAttributes();
+        HttpServletRequest request = servletRequestAttributes.getRequest();
+        request.getSession();
+    }
+
 }

@@ -1,5 +1,7 @@
 package com.sakura.project.service;
 
+import java.util.List;
+
 import org.springframework.data.domain.Pageable;
 
 import com.sakura.project.common.util.JsonResult;
@@ -41,5 +43,11 @@ public interface MgDepartmentInfoService {
      * @return
      */
     JsonResult<Boolean> del(Integer id);
+
+    /**
+     * 科室下拉列表
+     * @return
+     */
+    JsonResult<List<PageData>> option();
 
 }

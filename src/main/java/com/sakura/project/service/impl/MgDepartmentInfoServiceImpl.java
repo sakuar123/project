@@ -1,6 +1,7 @@
 package com.sakura.project.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,5 +77,17 @@ public class MgDepartmentInfoServiceImpl implements MgDepartmentInfoService {
     public JsonResult<Boolean> del(Integer id) {
         mgDepartmentInfoGeneratorMapper.deleteByPrimaryKey(id);
         return JsonResult.success();
+    }
+
+    @Override
+    public JsonResult<List<PageData>> option() {
+        List<MgDepartmentInfo> list = mgDepartmentInfoGeneratorMapper.selectAll();
+        List<PageData> result = list.stream().map(item -> {
+            PageData pageData = new PageData();
+            pageData.put("lable", item.getDepartmentName());
+            pageData.put("value", item.getId());
+            return pageData;
+        }).collect(Collectors.toList());
+        return JsonResult.success(result);
     }
 }

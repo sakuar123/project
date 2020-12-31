@@ -31,7 +31,7 @@ import io.swagger.annotations.ApiOperation;
  * Created by 李七夜 on 2020/8/28 16:54
  */
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @RequestMapping("/mg/user")
 @Api(tags = "用户管理控制器")
 public class MgUserController {

@@ -1,6 +1,7 @@
 package com.sakura.project.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,5 +76,17 @@ public class MgBranchInfoServiceImpl implements MgBranchInfoService {
     public JsonResult<Boolean> del(Integer id) {
         mgBranchInfoGeneratorMapper.deleteByPrimaryKey(id);
         return JsonResult.success();
+    }
+
+    @Override
+    public JsonResult<List<PageData>> option() {
+        List<MgBranchInfo> branchInfoList = mgBranchInfoGeneratorMapper.selectAll();
+        List<PageData> result = branchInfoList.stream().map(item -> {
+            PageData pageData = new PageData();
+            pageData.put("lable", item.getBranchName());
+            pageData.put("value", item.getId());
+            return pageData;
+        }).collect(Collectors.toList());
+        return JsonResult.success(result);
     }
 }

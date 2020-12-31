@@ -51,7 +51,7 @@ public class JsonResult<T> {
         return of(constant.getCode(), constant.getMessage(), data);
     }
 
-    public static <T> JsonResult<T> of(Integer code, String message, T data) {
+    private static <T> JsonResult<T> of(Integer code, String message, T data) {
         return new JsonResult<>(code, message, data);
     }
 

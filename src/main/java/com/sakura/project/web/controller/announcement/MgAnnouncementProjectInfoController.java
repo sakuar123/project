@@ -1,5 +1,7 @@
 package com.sakura.project.web.controller.announcement;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,5 +69,11 @@ public class MgAnnouncementProjectInfoController {
     @ApiOperation("删除项目公告")
     public JsonResult<Boolean> del(@PathVariable Integer id) {
         return mgAnnouncementProjectInfoService.del(id);
+    }
+
+    @GetMapping("/option")
+    @ApiOperation("公告下拉列表")
+    public JsonResult<List<PageData>> option() {
+        return mgAnnouncementProjectInfoService.option();
     }
 }

@@ -27,27 +27,6 @@ spring:
     password: chnrfvdwibkliffd
     protocol: smtp
     default-encoding: UTF-8
-#  kafka:
-#    #kafka代理地址，可以定义多个
-#    bootstrap-servers:  localhost:9092
-#    producer:
-#      #每次批量发送消息的数量
-#      batch-size: 16384
-#      buffer-memory: 33554432
-#      #指定消息key和消息体的编解码方式
-#      key-serializer:  org.apache.kafka.common.serialization.StringSerializer
-#      value-serializer:  org.apache.kafka.common.serialization.StringSerializer
-#    consumer:
-#      group-id: user-log-group
-#      auto-offset-reset: earliest
-#      enable-auto-commit: true
-#      auto-commit-interval: 100
-#      key-deserializer:  org.apache.kafka.common.serialization.StringDeserializer
-#      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-mybatis:
-  mapper-locations: classpath*:mybatis/mapper/*.xml
-  type-aliases-package: com.sakura.project.entity
-  configLocation: classpath:/mybatis-config.xml
 logging:
   level:
     com.sakura.project.mapper: debug
@@ -55,3 +34,7 @@ pagehelper:
   reasonable: true
   support-methods-arguments: true
   params: count=countSql
+mybatis:
+  mapper-locations: classpath*:mybatis/mapper/*.xml
+  type-aliases-package: com.sakura.project.entity
+  configLocation: classpath:/mybatis-config.xml
